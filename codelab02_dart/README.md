@@ -1,6 +1,6 @@
 ## RANGGA DWI SAPUTRA
-Pertemuan 2 : Dart - Tipe Data & Variabel
-NIM : 2341720248
+Pertemuan 2 : Dart - Tipe Data & Variabel <br>
+NIM : 2341720248 <br>
 Kelas : TI 3G
 <hr>
 2. Mengapa sangat penting untuk memahami bahasa pemrograman Dart sebelum kita menggunakan framework Flutter ? Jelaskan! <br>
