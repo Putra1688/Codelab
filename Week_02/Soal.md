@@ -24,6 +24,6 @@
 
 <li>late: Anda menggunakan late untuk menjanjikan bahwa variabel yang non-nullable (tidak boleh null) akan diinisialisasi (diberi nilai) sebelum pertama kali digunakan.</li>
 </ul>
-Contoh eksekusi kodenya bisa dilihat di 
+Contoh eksekusi kodenya bisa dilihat di <br>
 [Null Safety](https://github.com/Putra1688/PemrogramanMobile_3G_22_2025/blob/main/Week_02/04_nullSafety.dart) dan 
 [Late String](https://github.com/Putra1688/PemrogramanMobile_3G_22_2025/blob/main/Week_02/04_lateString.dart)
