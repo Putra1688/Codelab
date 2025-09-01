@@ -1,5 +1,6 @@
 2. Mengapa sangat penting untuk memahami bahasa pemrograman Dart sebelum kita menggunakan framework Flutter ? Jelaskan!
 3. Rangkumlah materi dari codelab ini menjadi poin-poin penting yang dapat Anda gunakan untuk membantu proses pengembangan aplikasi mobile menggunakan framework Flutter.
+4. Buatlah penjelasan dan contoh eksekusi kode tentang perbedaan Null Safety dan Late variabel !
 <hr>
 === JAWABAN ===
 <hr>
@@ -16,4 +17,11 @@
 <li> Bisa beradaptasi untuk lingkungan lain seperti web dengan cara "diterjemahkan" ke JavaScript. </li>
 <li> Konsep OOP, Operators, Arithmatic, syntaks kurang lebih sama dengan yng lain </li>
 </ul>
+<br>
+4. Berikut perbedaan Inti :
+<ul>
+<li> Null Safety (?): Anda menggunakan tanda tanya '?' untuk mengizinkan sebuah variabel bernilai null. Ini digunakan ketika sebuah nilai memang bersifat opsional atau mungkin tidak ada.</li>
 
+<li>late: Anda menggunakan late untuk menjanjikan bahwa variabel yang non-nullable (tidak boleh null) akan diinisialisasi (diberi nilai) sebelum pertama kali digunakan.</li>
+</ul>
+Contoh eksekusi kodenya bisa dilihat di [Null Safety](https://github.com/Putra1688/PemrogramanMobile_3G_22_2025/blob/main/Week_02/04_nullSafety.dart.dart) dan [Late String](https://github.com/Putra1688/PemrogramanMobile_3G_22_2025/blob/main/Week_02/04_lateString.dart)
