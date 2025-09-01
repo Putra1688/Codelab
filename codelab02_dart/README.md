@@ -1,10 +1,10 @@
 ## RANGGA DWI SAPUTRA
-Pertemuan 2 : Dart - Tipe Data & Variabel
-NIM : 2341720248
+Pertemuan 2 : Dart - Tipe Data & Variabel <br>
+NIM : 2341720248 <br>
 Kelas : TI 3G
 <hr>
-2. Mengapa sangat penting untuk memahami bahasa pemrograman Dart sebelum kita menggunakan framework Flutter ? Jelaskan!
-3. Rangkumlah materi dari codelab ini menjadi poin-poin penting yang dapat Anda gunakan untuk membantu proses pengembangan aplikasi mobile menggunakan framework Flutter.
+2. Mengapa sangat penting untuk memahami bahasa pemrograman Dart sebelum kita menggunakan framework Flutter ? Jelaskan! <br>
+3. Rangkumlah materi dari codelab ini menjadi poin-poin penting yang dapat Anda gunakan untuk membantu proses pengembangan aplikasi mobile menggunakan framework Flutter. <br>
 4. Buatlah penjelasan dan contoh eksekusi kode tentang perbedaan Null Safety dan Late variabel !
 <hr>
 === JAWABAN ===
