@@ -1,6 +1,6 @@
 ## RANGGA DWI SAPUTRA
 Pertemuan 3 
-NIM : 2341720248
+NIM : 2341720248 <br>
 Kelas : TI 3G
 <hr>
 
@@ -26,7 +26,7 @@ Praktikum 2 - Looping While - Do <br>
     Kode 'while' berjalan dengan cara var counter yang sudah dikasi nilai awal akan ditampilkan dengan nilai yang terus bertambah nilainya selama kurang dari 33
     Hasilnya bisa dilihat pada gambar berikut,
   
-  ![Alt Text](img/while(start).png)
+  ![Alt Text](img/whle(start).png)
 
 2.2 Kode 'do-while' tersebut akan menampilkan nilai dari counter, yang setiap iterasi nilainya akan terus bertambah selama kurang dari 77
     Nilai counter awal pada program didapat dari sisa berjalannya program 'while' sebelumnya
@@ -39,11 +39,11 @@ Praktikum 3 - For Looping <br>
     Eror disebabkan karena adanya inkonsistensi variabel Index, untuk memperbaikinya perlu disamakan besar kecilnya
     Block kode program for tersebut akan menampilkan nilai index dimulai dengan angka 10 yang akan terus bertambah nilainya selama kurang dari 27
      Hasilnya bisa dilihat pada gambar berikut,
-  ![Alt Text](img/praktikum3_1.png.png)
+  ![Alt Text](img/praktikum3_1.png)
 
 3.2
   Sebenarnya block kode tersebut bisa berjalan, namun tidak menampilkan apa apa karena kondisinya adalah "jika di angka 21, maka di skip" dan Karena bagian else if (Index > 1 || Index < 7) itu selalu true untuk semua nilai Index dalam loop, jadi print(Index) tidak pernah dieksekusi. <br>
   Hasilnya bisa dilihat pada gambar berikut,
-  ![Alt Text](img/praktikum3_0.png.png) <br>
+  ![Alt Text](img/praktikum3_0.png) <br>
   Jika hasil yang diinginkan hanya skip angka antara 1–7, maka harus pakai `&&` dan mendapatkan hasil sebagai berikut,
-  ![alt text](&&.png)
+  ![alt text](img/&&.png)
