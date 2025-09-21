@@ -59,6 +59,7 @@ Berikut hasil modifikasi dengan menambahkan nim dan nama
 Program tidak tau 'list1' itu apa → otomatis dianggap non-nullable jika tidak diberi tipe. Maka dari itu perlu `List<int?>?` untuk memberitahunya. `list3` diisi dengan nilai `[0, ...list1]`. list1 isinya ada 1, 2, dan null (3) + 0 (pada list3) jadi nilai `.length`nya adalah 4. Hasil running kode program sebagai berikut, <br>
 
 ![alt text](img/p4.2.png)
+
 Berikut hasil modifikasi dengan ditambahkan NIM dan NAMA
 
 ![alt text](img/p4.2_modif.png)
@@ -97,6 +98,7 @@ var login = 'Manager';
   print(nav2);
 ```
 maka dihaislkan output sebagai berikut:
+
 ![alt text](img/p4.4_user.png)
 
 4.5 `Langkah 6` ini valid dan tidak ada error. `[for (var i in listOfInts) '#$i']` akan otomatis men-generate elemen list. Sebagaimana gamabr berikut:
