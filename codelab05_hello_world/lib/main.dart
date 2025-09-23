@@ -1,73 +1,88 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/basic_widget/fab_widget.dart';
+import 'package:flutter_application_1/basic_widget/loading_cuportino.dart';
+import 'package:flutter_application_1/basic_widget/text_widget.dart';
+import 'package:flutter_application_1/basic_widget/image_widget.dart';
+import 'package:flutter_application_1/basic_widget/my_dialog_widget.dart';
+import 'package:flutter_application_1/basic_widget/my_scaffolt_widget.dart';
+import 'package:flutter_application_1/basic_widget/my_input_selection_widget.dart';
+import 'package:flutter_application_1/basic_widget/my_date_pickers_widget.dart';
 
-void main() => runApp(const MyApp());
+void main() {
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Contoh Date Picker',
-      home: MyHomePage(title: 'Contoh Date Picker'),
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+      ),
+      home: const MyHomePage(title: 'Rangga Dwi Saputra'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  const MyHomePage({super.key, required this.title});
 
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  // Variable/State untuk mengambil tanggal
-  DateTime selectedDate = DateTime.now();
+  int _counter = 0;
 
-  //  Initial SelectDate FLutter
-  Future<void> _selectDate(BuildContext context) async {
-    // Initial DateTime FIinal Picked
-    final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDate,
-        firstDate: DateTime(2015, 8),
-        lastDate: DateTime(2101));
-    if (picked != null && picked != selectedDate) {
-      setState(() {
-        selectedDate = picked;
-      });
-    }
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+    return MyScaffold(
+      title: widget.title,
+      onPressed: _incrementCounter,
+      // appBar: AppBar(
+      //   backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+      //   title: Text(widget.title),
+      // ),
+      body: SingleChildScrollView(
+        
+          child : Column(
+
           children: <Widget>[
-            Text("${selectedDate.toLocal()}".split(' ')[0]),
-            const SizedBox(
-              height: 20.0,
+            const SizedBox (height: 16),
+            const MyTextWidget(),
+            const MyImageWidget(),
+            const MyLoadingCupertino(),
+            const MyFabWidget(), 
+            const MyDialog(),
+            const MyInputSelection(),
+            const MyDatePickers(title: 'Pilih Tanggal'),
+            Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
-            ElevatedButton(
-              onPressed: () => {
-                _selectDate(context),
-                // ignore: avoid_print
-                print(selectedDate.day + selectedDate.month + selectedDate.year)
-              },
-              child: const Text('Pilih Tanggal'),
-            ),
+            const SizedBox (height: 16),
           ],
         ),
-      ),
+      
+    ),
+
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: _incrementCounter,
+      //   tooltip: 'Increment Counter',
+      //   child: const Icon(Icons.add),
+      // ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
