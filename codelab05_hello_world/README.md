@@ -1,3 +1,20 @@
+# RANGGA DWI SAPUTRA
+<table>
+  <tr>
+    <td>NIM</td>
+    <td>2341720248</td>
+  </tr>
+  <tr>
+    <td>Kelas</td>
+    <td>TI 3G</td>
+  </tr>
+  <tr>
+    <td>Pertemuan </td>
+    <td>Flutter Aplikasi Pertama</td>
+  </tr>
+</table>
+<hr>
+
 # Hello_World
 
 A new Flutter project.
