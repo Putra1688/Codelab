@@ -35,7 +35,17 @@ A new Flutter project.
         ```
     - body dengan `child: Text` dihapus dan diganti dengan `children: titleSelection`
 
+    Berikut hasil dari praktikum 1: <br>
+    <img src="images/prak01.png" alt="Hasil Praktikum 1" width="250"/>
 
+### Praktikum 2 : Implementasi button row
+1. Buat methode Column `_buildButtonColumn` yang diletakkan diluar `Widget build()` tapi masih berada di dalam class `MyApp()`
+2. Widget buttonSection setelah block kode `Widget titleSection`, sebelum retun.
+3. Tambahkan section ke body (return)
+
+    Berikut hasil dari praktikum 2 :
+
+    <img src="images/prak02.png" alt="Hasil Praktikum 2" width="250"/>
 
 
 
