@@ -47,6 +47,17 @@ A new Flutter project.
 
     <img src="images/prak02.png" alt="Hasil Praktikum 2" width="250"/>
 
+### Praktikum 3 : Impelementasi Text Section
+1. Buat widget textSection
+2. Tambahkan di dalam widget build sebelum return
 
+    Berikut hasil dari praktikum 3 :
 
+    <img src="images/prak03.png" alt="Hasil Praktikum 3" width="250"/>
+
+### Praktikum 4 : Implementasi Image Section
+1. Tambahkan image, registrasikan image di pubspec.yaml, dan masukin image.asset ke dalam return
+2. Berikut hasilnya :
+
+     <img src="images/prak04.png" alt="Hasil Praktikum 4" width="250"/>
 

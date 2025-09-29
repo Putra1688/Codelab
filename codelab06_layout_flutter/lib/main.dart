@@ -20,12 +20,12 @@ class MyApp extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.only(bottom: 8),
                   child: const Text(
-                    'Wisata Gunung di Batu',
+                    'Infinity Castle Arc',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
                 Text(
-                  'Batu, Malang, Indonesia',
+                  'Kimetsu no Yaiba',
                   style: TextStyle(color: Colors.grey[500]),
                 ),
               ],
@@ -48,13 +48,31 @@ class MyApp extends StatelessWidget {
       ],
     );
 
+    Widget textSection = Container(
+      padding: const EdgeInsets.all(32),
+      child: const Text(
+        '''Infinity Castle adalah benteng mistis dalam serial Demon Slayer: Kimetsu no Yaiba. Strukturnya penuh dengan lorong berliku dan ruangan yang selalu berubah, memberikan suasana dramatis sekaligus misterius. Desainnya terinspirasi dari ryokan Jepang tradisional, khususnya Ryokan Ookawaso di Fukushima.
+
+Infinity Castle menjadi lokasi pertempuran klimaks antara Korps Pembasmi Iblis dan para Upper Moon. 
+Oleh: Rangga Dwi Saputra (NIM: 2341720248)''',
+        softWrap: true,
+      ),
+    );
+
     return MaterialApp(
-      title: 'Flutter layout Rangga',
+      title: 'Flutter layout Rangga - 2341720248',
       home: Scaffold(
         appBar: AppBar(title: const Text('Flutter layout demo - 2341720248')),
         // body: const Center(
         //   child: Text('Hello World, Rangga Dwi Saputra is coming in flutter!'),
-        body: Column(children: [titleSection, buttonSection]),
+        body: ListView(children: [
+          Image.asset(
+            'images/infinity_castle.jpg',
+            width: 600,
+            height: 240,
+            fit: BoxFit.cover,
+          ),
+          titleSection, buttonSection, textSection]),
       ),
     );
   }
