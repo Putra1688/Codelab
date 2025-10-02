@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
@@ -8,18 +9,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     const String appTitle = 'Layouts in Flutter';
 
-    
     // kiri
     // JUDUL & DESKRIPSI
     final titleText = Container(
       margin: const EdgeInsets.only(bottom: 8),
       child: const Text(
-      'Mie Ayam',
-      style: TextStyle(
-        fontSize: 14,
-        fontWeight: FontWeight.bold,
-        fontFamily: 'Georgia', // Contoh font
-      )
+        'Mie Ayam',
+        style: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          fontFamily: 'Georgia', // Contoh font
+        ),
       ),
     );
 
@@ -74,41 +74,41 @@ class MyApp extends StatelessWidget {
 
     // DefaultTextStyle.merge() allows you to create a default text
     // style that is inherited by its child and all subsequent children.
-    final iconList = IconTheme (
-      data: const IconThemeData(size:14),
+    final iconList = IconTheme(
+      data: const IconThemeData(size: 14),
       child: DefaultTextStyle.merge(
-      style: descTextStyle,
-      child: Container(
-        padding: const EdgeInsets.all(3),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Column(
-              children: [
-                Icon(Icons.kitchen, color: Colors.green[500]),
-                const Text('PREP:'),
-                const Text('25 min'),
-              ],
-            ),
-            // const SizedBox(width: 8),
-            Column(
-              children: [
-                Icon(Icons.timer, color: Colors.green[500]),
-                const Text('COOK:'),
-                const Text('1 hr'),
-              ],
-            ),
-            // const SizedBox(width: 8),
-            Column(
-              children: [
-                Icon(Icons.restaurant, color: Colors.green[500]),
-                const Text('FEEDS:'),
-                const Text('4-6'),
-              ],
-            ),
-          ],
+        style: descTextStyle,
+        child: Container(
+          padding: const EdgeInsets.all(3),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Column(
+                children: [
+                  Icon(Icons.kitchen, color: Colors.green[500]),
+                  const Text('PREP:'),
+                  const Text('25 min'),
+                ],
+              ),
+              // const SizedBox(width: 8),
+              Column(
+                children: [
+                  Icon(Icons.timer, color: Colors.green[500]),
+                  const Text('COOK:'),
+                  const Text('1 hr'),
+                ],
+              ),
+              // const SizedBox(width: 8),
+              Column(
+                children: [
+                  Icon(Icons.restaurant, color: Colors.green[500]),
+                  const Text('FEEDS:'),
+                  const Text('4-6'),
+                ],
+              ),
+            ],
+          ),
         ),
-      ),
       ),
     );
 
@@ -151,11 +151,71 @@ class MyApp extends StatelessWidget {
       ],
     );
 
+    // final gridGambar = Row(
+    //   crossAxisAlignment: CrossAxisAlignment.center,
+    //   children: [
+    //     Expanded(child: Image.asset('images/mie_ayam.webp')),
+    //     const SizedBox(width: 10),
+    //     Expanded(flex: 2, child: Image.asset('images/mie_ayam.webp')),
+    //     const SizedBox(width: 10),
+    //     Expanded(child: Image.asset('images/mie_ayam.webp')),
+    //   ],
+    // );
+
+    final gridGambar = Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const Text(
+          "Flex Row Layout",
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 10),
+
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: Image.asset('images/mie_ayam.webp', fit: BoxFit.cover),
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              flex: 2,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: Image.asset('images/mie_ayam.webp', fit: BoxFit.cover),
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: Image.asset('images/mie_ayam.webp', fit: BoxFit.cover),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+
     return MaterialApp(
       title: appTitle,
       home: Scaffold(
         appBar: AppBar(title: const Text(appTitle)),
-        body: Center(child: mainLayout),
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              mainLayout,
+              Padding(
+                padding: const EdgeInsets.fromLTRB(10, 20, 10, 5),
+                child: gridGambar,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
