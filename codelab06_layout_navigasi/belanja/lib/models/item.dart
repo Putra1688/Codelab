@@ -3,6 +3,7 @@ class Item {
   int price;
   String img;
   int stock;
+  int discount;
   double rating;
 
   Item({
@@ -10,6 +11,7 @@ class Item {
     required this.price,
     required this.img,
     required this.stock,
+    required this.discount,
     required this.rating,
     });
 }
