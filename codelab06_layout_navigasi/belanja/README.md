@@ -28,7 +28,9 @@ A new Flutter project.
 4. Membuat data model
 5. Pada `HomePage` definisikan `ListView` dengan Sumber datanya dari model list object item.
 6. Membuat ListView dan itemBuilder
+
     <img src="images/image.png" alt="Hasil Praktikum 1" width="250"/>
+    
 7. Menambahkan aksi pada ListView
 
     [Klik untuk menonton video](https://drive.google.com/file/d/14bMAY8OazNdrAmlRtw_C9hyh-AlHuZCl/view?usp=sharing)
