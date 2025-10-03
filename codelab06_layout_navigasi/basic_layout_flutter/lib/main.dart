@@ -116,9 +116,7 @@ class MyApp extends StatelessWidget {
     final leftColumn = Container(
       padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 0),
 
-      // Anda bisa menambahkan properti lain di sini
-      // color: Colors.grey[200], // misalnya memberi warna latar
-      // decoration: BoxDecoration( ... ), // misalnya memberi border
+      // decoration: BoxDecoration( ... ), // memberi border
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [titleText, descriptionText, ratings, iconList],

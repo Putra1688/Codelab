@@ -9,8 +9,8 @@
     <td>TI 3G</td>
   </tr>
   <tr>
-    <td>Pertemuan </td>
-    <td>Flutter Aplikasi Pertama</td>
+    <td>Pertemuan 6</td>
+    <td>Flutter Layput & Navigasi</td>
   </tr>
 </table>
 <hr>
