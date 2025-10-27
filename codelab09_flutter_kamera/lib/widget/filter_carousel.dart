@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'filter_selector.dart';
-import 'package:camera/camera.dart';
+import 'dart:io';
 
 @immutable
 class PhotoFilterCarousel extends StatefulWidget {
-  final CameraDescription camera;
-  const PhotoFilterCarousel({
-    Key? key,
-    required this.camera, // tambahkan ini
-  }) : super(key: key);
+  // final CameraDescription camera;
+  final String imagePath;
+  const PhotoFilterCarousel({super.key, required this.imagePath});
 
   @override
   State<PhotoFilterCarousel> createState() => _PhotoFilterCarouselState();
@@ -47,53 +45,39 @@ class _PhotoFilterCarouselState extends State<PhotoFilterCarousel> {
     );
   }
 
-  late CameraController _cameraController;
-  late Future<void> _initializeControllerFuture;
+  // late CameraController _cameraController;
+  // late Future<void> _initializeControllerFuture;
 
-  @override
-  void initState() {
-    super.initState();
+  // @override
+  // void initState() {
+  //   super.initState();
 
-    // Inisialisasi kamera depan misalnya
-    _cameraController = CameraController(
-      widget.camera, // kamera dikirim dari main()
-      ResolutionPreset.medium,
-    );
+  //   // Inisialisasi kamera depan misalnya
+  //   _cameraController = CameraController(
+  //     widget.camera, // kamera dikirim dari main()
+  //     ResolutionPreset.medium,
+  //   );
 
-    _initializeControllerFuture = _cameraController.initialize();
-  }
+  //   _initializeControllerFuture = _cameraController.initialize();
+  // }
 
-  @override
-  void dispose() {
-    _cameraController.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _cameraController.dispose();
+  //   super.dispose();
+  // }
 
   Widget _buildPhotoWithFilter() {
-    return FutureBuilder(
-      future: _initializeControllerFuture,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          // Preview kamera dengan filter
-          return ValueListenableBuilder(
-            valueListenable: _filterColor,
-            builder: (context, color, child) {
-              return Stack(
-                fit: StackFit.expand,
-                children: [
-                  CameraPreview(_cameraController), // preview live kamera
-                  Container(
-                    color: color.withOpacity(
-                      0.3,
-                    ), // filter warna semi-transparan
-                  ),
-                ],
-              );
-            },
-          );
-        } else {
-          return const Center(child: CircularProgressIndicator());
-        }
+    return ValueListenableBuilder<Color>(
+      valueListenable: _filterColor,
+      builder: (context, color, child) {
+        return Stack(
+          fit: StackFit.expand,
+          children: [
+            Image.file(File(widget.imagePath), fit: BoxFit.cover),
+            Container(color: color.withOpacity(0.3)),
+          ],
+        );
       },
     );
   }
