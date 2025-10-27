@@ -58,7 +58,22 @@ Dengan begitu, tampilan (UI) akan otomatis diperbarui sesuai perubahan data.
 ## Praktikum 3: Membuat State di Multiple Screens
 1. Berikut demonstrasi praktikum 1
 
-    <img src="img/rec2.webp" style="max-width: 40vw;"/> 
+    <img src="img/rec3.webp" style="max-width: 40vw;"/> 
+
+    Beberapa kesalahan yang saya temukan dan perbaikannya :
+    - `List<Plan>(planNotifier.value)` bukan cara yang valid untuk menyalin list menyebabkan error "The class 'List' doesn't have an unnamed constructor". --> solusi, Gunakan `List<Plan>.from()` untuk menyalin list
+    - `plan` adalah getter (`Plan get plan => widget.plan;`), karena tidak punya setter, maka solusinya adalah hapus baris tersebut
+    - `main.dart` masih mengakses `PlanScreen` padahal di praktikum 3 ini adalah untuk menampilkan `PlanCreatorScreen` solusiny --> ubah `home` di main
 
 2. Berdasarkan Praktikum 3 yang telah Anda lakukan, jelaskan maksud dari gambar diagram di soal
-3. 
+
+    Diagram tersebut menjelaskan alur navigasi dan struktur widget pada aplikasi Master Plan di Praktikum 3.
+
+    - Bagian kiri menunjukkan tampilan awal aplikasi (PlanCreatorScreen) yang berada di dalam MaterialApp dan PlanProvider. Pada layar ini, pengguna bisa menambahkan rencana (Plan) melalui TextField, lalu daftar rencana ditampilkan menggunakan ListView di dalam Column.
+
+    - Panah “Navigator Push” menunjukkan proses navigasi ke layar baru ketika pengguna memilih salah satu rencana.
+
+    - Bagian kanan menampilkan layar tujuan (PlanScreen), yang memiliki struktur berbeda. Layar ini menggunakan Scaffold dengan AppBar, lalu di dalam Column terdapat ListView (daftar tugas/todo) dan Text di dalam SafeArea untuk menampilkan pesan kelengkapan.
+
+    Intinya: diagram ini menggambarkan perpindahan dari layar pembuat rencana (input list plan) ke layar detail rencana (daftar tugas tiap plan) menggunakan Navigator.push().
+ 
