@@ -24,7 +24,7 @@ Berikut hasil dari penggunaan filter pada kamera
 
 1. Penggabungan hasil praktikum 1 dan praktikum 2
 
-    <img src="img/praktikum.webp" style="max-width: 40vw;"/> 
+    <img src="img/kamerafilter.webp" style="max-width: 40vw;"/> 
 
 2. Maksud void async pada praktikum 1?
 
