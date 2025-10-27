@@ -2,7 +2,7 @@
 
 A new Flutter project.
 
-## 
+## Praktikum 1 : Dasar State dengan Model-View
 1. Berikut demonstrasi praktikum 1
 
     <img src="img/rec1.webp" style="max-width: 40vw;"/> 
@@ -35,3 +35,30 @@ Dengan begitu, tampilan (UI) akan otomatis diperbarui sesuai perubahan data.
 
     `initState()` digunakan saat pertama kali widget dibuat untuk menyiapkan data atau controller, seperti membuat ScrollController dan menambahkan listener agar keyboard tertutup saat daftar discroll.
     Sedangkan dispose() dipanggil saat widget dihapus dari layar untuk membersihkan resource, yaitu menghapus scrollController agar tidak terjadi kebocoran memori.
+
+## Praktikum 2: Mengelola Data Layer dengan InheritedWidget dan InheritedNotifier
+1. Berikut demonstrasi praktikum 1
+
+    <img src="img/rec2.webp" style="max-width: 40vw;"/> 
+
+    Secara langsung tidak ada perubahan yang signifikan pada tampilan. Untuk perbaikan yang saya lakukan hanya pada file main yang tadinya Provider tidak dikenali, saya tambahkan di bagian import dengan kode ini
+    `import './provider/plan_provider.dart';`
+
+2. Jelaskan mana yang dimaksud InheritedWidget pada langkah 1 tersebut! Mengapa yang digunakan InheritedNotifier?
+
+    Yang dimaksud `InheritedWidget` adalah kelas induk (base class) di Flutter yang memungkinkan data dibagikan ke seluruh widget turunan dalam pohon widget (widget tree).
+
+    Pada langkah ini digunakan `InheritedNotifier` karena selain membagikan data (Plan), juga ingin memberi tahu widget lain saat data berubah.
+`InheritedNotifier` menggabungkan fungsi `InheritedWidget` dengan `ChangeNotifier`, sehingga tampilan otomatis ter-update ketika nilai `ValueNotifier<Plan>` berubah.
+
+3. Jelaskan maksud dari method di langkah 3 pada praktikum tersebut! Mengapa dilakukan demikian?
+
+    Method di langkah 3 berfungsi untuk menghitung dan menampilkan progres penyelesaian tugas dalam sebuah rencana (plan). Hal ini dilakukan agar aplikasi bisa menampilkan informasi kemajuan plan secara otomatis tanpa perlu menghitung manual di UI setiap kali data berubah.
+
+## Praktikum 3: Membuat State di Multiple Screens
+1. Berikut demonstrasi praktikum 1
+
+    <img src="img/rec2.webp" style="max-width: 40vw;"/> 
+
+2. Berdasarkan Praktikum 3 yang telah Anda lakukan, jelaskan maksud dari gambar diagram di soal
+3. 
