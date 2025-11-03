@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:async/async.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 
@@ -30,9 +31,37 @@ class FuturePage extends StatefulWidget {
   State<FuturePage> createState() => _FuturePage();
 }
 
+// class ini berfungsi untuk menampilkan halaman utama aplikasi
 class _FuturePage extends State<FuturePage> {
   String result = '';
+  late Completer completer;
 
+  // method ini berfungsi untuk mendapatkan angka secara asynchronous
+  Future getNumber() {
+    completer = Completer<int>();
+    // calculate();
+    calculate2();
+    return completer.future;
+  }
+
+  // untuk melakukan perhitungan secara asynchronous
+  Future calculate() async {
+    await Future.delayed(const Duration(seconds: 5));
+    completer.complete(42);
+  }
+
+  // melakukan perhitungan secara asynchronous dengan penanganan error
+  Future calculate2() async {
+    try {
+      await Future.delayed(const Duration(seconds: 5));
+      throw Exception('Simulated error'); // ini memicu error
+      // completer.complete(42);  jika ini dinonaktifkan, maka akan memicu error oleh catch
+    } catch (e) {
+      completer.completeError(e);
+    }
+  }
+
+  //  mengambil data dari API secara asynchronous
   Future<Response> getData() async {
     const authority = 'www.googleapis.com';
     const path = '/books/v1/volumes/jJAhBwAAQBAJ';
@@ -40,28 +69,32 @@ class _FuturePage extends State<FuturePage> {
     return http.get(url);
   }
 
+  // mengembalikan angka 1 secara asynchronous setelah menunggu 3 detik
   Future<int> returnOneAsync() async {
     await Future.delayed(const Duration(seconds: 3));
     return 1;
   }
 
+  // mengembalikan angka 2 secara asynchronous setelah menunggu 3 detik
   Future<int> returnTwosync() async {
     await Future.delayed(const Duration(seconds: 3));
     return 2;
   }
 
+  // mengembalikan angka 3 secara asynchronous setelah menunggu 3 detik
   Future<int> returnThreeAsync() async {
     await Future.delayed(const Duration(seconds: 3));
     return 3;
   }
 
+  // menghitung total dari tiga angka yang dikembalikan secara asynchronous
   Future count() async {
     int total = 0;
     total = await returnOneAsync();
     total += await returnTwosync();
     total += await returnThreeAsync();
     setState(() {
-      result = total.toString(); 
+      result = total.toString();
     });
   }
 
@@ -76,8 +109,19 @@ class _FuturePage extends State<FuturePage> {
             ElevatedButton(
               child: const Text('GO!'),
               onPressed: () {
-                count();
-                setState(() {});
+                // ------------------
+                getNumber().then((value) {
+                  setState(() {
+                    result = value.toString();
+                  });
+                });
+                setState(() {
+                  result = 'An error occurred';
+                });
+
+                // count();
+                // ------------------
+                // setState(() {});
                 // getData()
                 //     .then((value) {
                 //       result = value.body.toString().substring(0, 450);
