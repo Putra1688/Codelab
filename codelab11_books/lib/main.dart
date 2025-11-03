@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:async/async.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
+import 'geolocation.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +20,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const FuturePage(),
+      // home: const FuturePage(),
+      home: const LocationScreen(),
     );
   }
 }
@@ -76,7 +78,7 @@ class _FuturePage extends State<FuturePage> {
   }
 
   // mengembalikan angka 2 secara asynchronous setelah menunggu 3 detik
-  Future<int> returnTwosync() async {
+  Future<int> returnTwoAsync() async {
     await Future.delayed(const Duration(seconds: 3));
     return 2;
   }
@@ -91,11 +93,54 @@ class _FuturePage extends State<FuturePage> {
   Future count() async {
     int total = 0;
     total = await returnOneAsync();
-    total += await returnTwosync();
+    total += await returnTwoAsync();
     total += await returnThreeAsync();
     setState(() {
       result = total.toString();
     });
+  }
+
+  // menggunakan FutureGroup untuk mengelola beberapa Future secara bersamaan
+  void returnFG() {
+    final futures = Future.wait<int>([
+      returnOneAsync(),
+      returnTwoAsync(),
+      returnThreeAsync(),
+    ]);
+    // FutureGroup<int> futureGroup = FutureGroup<int>();
+    // futureGroup.add(returnOneAsync());
+    // futureGroup.add(returnTwoAsync());
+    // futureGroup.add(returnThreeAsync());
+    // futureGroup.close();
+    // futureGroup.future.then((List<int> value) {
+    futures.then((List<int> value) {
+      int total = 0;
+      for (var element in value) {
+        total += element;
+      }
+      setState(() {
+        result = total.toString();
+      });
+    });
+  }
+
+  // mengembalikan error secara asynchronous setelah menunggu 2 detik
+  Future returnError() async {
+    await Future.delayed(const Duration(seconds: 2));
+    throw Exception('Something terrible happened!');
+  }
+
+  // menangani error dari returnError menggunakan try-catch-finally
+  Future handleError() async {
+    try {
+      await returnError();
+    } catch (error) {
+      setState(() {
+        result = error.toString();
+      });
+    } finally {
+      print('Complete');
+    }
   }
 
   @override
@@ -109,18 +154,33 @@ class _FuturePage extends State<FuturePage> {
             ElevatedButton(
               child: const Text('GO!'),
               onPressed: () {
-                // ------------------
-                getNumber().then((value) {
-                  setState(() {
-                    result = value.toString();
-                  });
-                });
-                setState(() {
-                  result = 'An error occurred';
-                });
-
+                // ------------------ prak5
+                handleError()
+                    .then((value) {
+                      setState(() {
+                        result = 'Success';
+                      });
+                    })
+                    .catchError((onError) {
+                      setState(() {
+                        result = onError.toString();
+                      });
+                    })
+                    .whenComplete(() => print('Complete'));
+                // ------------------ prak4
+                // returnFG();
+                // ------------------ prak3
+                // getNumber().then((value) {
+                //   setState(() {
+                //     result = value.toString();
+                //   });
+                // });
+                // setState(() {
+                //   result = 'An error occurred';
+                // });
+                // ------------------ prak2
                 // count();
-                // ------------------
+                // ------------------ prak1
                 // setState(() {});
                 // getData()
                 //     .then((value) {

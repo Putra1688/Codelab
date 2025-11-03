@@ -103,3 +103,88 @@ Capture hasil:
 <img src="image/soal6.webp" style="max-width: 40vw;"/> 
 
 ## Praktikum 4: Memanggil Future secara paralel
+
+**Soal no 7. Capture hasil praktikum 4**, hasilnya dalam 3 detik berupa angka 6 muncul lebih cepat dibandingkan praktikum sebelumnya yang menunggu sampai 9 detik.
+
+<img src="image/soal7.webp" style="max-width: 40vw;"/> 
+
+**Soal no 8. Perbedaan kode** :
+- `Future.wait` untuk menunggu sekelompok tugas asinkron yang Anda ketahui semuanya di awal. Ini adalah pilihan utama untuk konkurensi.
+- `FutureGroup` (jika tersedia melalui paket tambahan) hanya ketika Anda perlu mengumpulkan tugas asinkron secara bertahap selama runtime sebelum memutuskan untuk menunggu semuanya.
+
+## Praktikum 5: Menangani Respon Error pada Async Code
+
+**Soal no 9. Capture hasil praktikum 5**
+
+<img src="image/soal9.webp" style="max-width: 40vw;"/> 
+
+**Soal no 10. Perbedaan langkah kode**
+```bash
+// mengembalikan error secara asynchronous setelah menunggu 2 detik
+  Future returnError() async {
+    await Future.delayed(const Duration(seconds: 2));
+    throw Exception('Something terrible happened!');
+  }
+
+  // menangani error dari returnError menggunakan try-catch-finally
+  Future handleError() async {
+    try {
+      await returnError();
+    } catch (error) {
+      setState(() {
+        result = error.toString();
+      });
+    } finally {
+      print('Complete');
+    }
+  }
+```
+
+- `returnError()` adalah fungsi yang menciptakan/melempar (throws) sebuah error asinkron setelah jeda waktu.
+- `handleError()` adalah fungsi yang mengonsumsi dan menangani (handles) error yang dilempar oleh `returnError()` menggunakan struktur `try-catch-finally` yang aman.
+
+Panggil method `handleError()` tersebut di `ElevatedButton`, lalu run. Capture hasil:
+
+<img src="image/soal10.webp" style="max-width: 40vw;"/> 
+
+## Praktikum 6: Menggunakan Future dengan StatefulWidget
+
+**Soal no 11. Tambahkan identitas**
+```bash
+Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Rangga`s Location')),
+      body: Center(child: Text(myPosition)),
+    );
+  }
+```
+
+Capture hasil :
+
+<img src="image/soal11.jpg" alt="Hasil Praktikum" width="250"/>
+
+**Soal no 12. Tambahkan delay pada method getPosition() dengan kode await Future.delayed(const Duration(seconds: 3));**
+
+Capture hasil :
+
+<img src="image/soal12.webp" style="max-width: 40vw;"/>
+
+Kode ini Tidak bisa mendapatkan koordinat GPS secara langsung ketika dijalankan di browser (Flutter Web) dengan `geolocator`. Karena Tidak ada akses langsung ke sensor GPS.
+Browser hanya bisa memperkirakan lokasi lewat: IP address, Wi-Fi, atauizin lokasi dari user.
+Jadi hasilnya bisa tidak akurat, atau tidak muncul sama sekali.
+
+## Praktikum 7: Manajemen Future dengan FutureBuilder
+
+**Soal no 13.**
+
+Walaupun logikanya berbeda, tujuan akhirnya sama yaitu :Menampilkan loading spinner `(CircularProgressIndicator)` saat data lokasi belum ada. dan Menampilkan teks hasil koordinat saat data lokasi sudah berhasil diambil.
+
+Perbedaannya hanya di cara Flutter memproses data:
+- Versi `setState()` → UI diperbarui secara manual setelah data lokasi didapat dengan memanggil `setState()`.
+- Versi `FutureBuilder()` → UI diperbarui secara otomatis berdasarkan status Future (menunggu, selesai, error).
+
+**Soal no 14.** Capture hasil modifikasi
+
+<img src="image/soal14.webp" style="max-width: 40vw;"/>
+
+Saat GPS saya matikan, tidak muncul pesan kesalahan, melainkan indikator spinner yang terus berputar tanpa henti.
