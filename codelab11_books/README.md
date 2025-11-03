@@ -32,5 +32,16 @@ Link buku asli : https://www.google.co.id/books/edition/The_True_Value_of_Martia
 
 **Soal no 3. Capture hasil praktikum berupa GIF**
 
+Maksud kode langkah 5 tersebut terkait `substring` dan `catchError!` adalah Kode tersebut menampilkan tombol `“GO!”` yang ketika ditekan akan memanggil fungsi `getData()`. `substring` digunakan untuk membatasi panjang teks yang ditampilkan, sedangkan `catchError` digunakan untuk menangani kesalahan agar program tidak berhenti tiba-tiba.
+
 <img src="image/soal3.webp" style="max-width: 40vw;"/> 
+
+## Praktikum 2: Menggunakan await/async untuk menghindari callbacks
+**Soal no 4. Maksud kode langkah 1 dan 2**
+
+Kode tersebut menjalankan tiga fungsi asynchronous yang masing-masing menunggu 3 detik lalu mengembalikan angka 1, 2, dan 3. Fungsi `count() ` memanggil ketiganya secara berurutan (sequential), menjumlahkan hasilnya menjadi 6, lalu menampilkan hasil itu ke UI dengan `setState()`. Total waktu eksekusi sekitar 9 detik.
+
+<img src="image/soal4.webp" style="max-width: 40vw;"/> 
+
+
 
