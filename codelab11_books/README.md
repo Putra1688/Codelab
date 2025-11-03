@@ -24,6 +24,8 @@ A new Flutter project.
 
 **Soal no 2. Cari judul buku di Google Books, lalu ganti `ID` buku pada variabel path di kode tersebut. Kemudian akses di browser URI tersebut untuk menampilkan data JSON**
 
+Link buku asli : https://www.google.co.id/books/edition/The_True_Value_of_Martial_Arts_for_Self/jJAhBwAAQBAJ?hl=id&gbpv=1&dq=self+development&pg=PA52&printsec=frontcover
+
 <img src="image/soal2.png" alt="Hasil Praktikum" width="650"/>
 
 <br>
