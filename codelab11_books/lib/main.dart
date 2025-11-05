@@ -4,6 +4,10 @@ import 'package:async/async.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 import 'geolocation.dart';
+import 'newnav_first.dart';
+import 'navigation_first.dart';
+import 'navigation_dialog.dart';
+import 'newnavigation_dialog.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +25,11 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       // home: const FuturePage(),
-      home: const LocationScreen(),
+      // home: const LocationScreen(),
+      // home: const NavigationFirst(),
+      // home: const NewNavigationFirst(),
+      home: const NavigationDialogScreen(),
+      // home: const NewNavigationDialogScreen(),
     );
   }
 }
