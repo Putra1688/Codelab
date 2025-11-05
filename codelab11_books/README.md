@@ -168,7 +168,7 @@ Capture hasil :
 
 Capture hasil :
 
-<img src="image/soal12.webp" style="max-width: 20vw;"/>
+<img src="image/soal12.webp" style="width: 300px; height: auto;"/>
 
 Kode ini Tidak bisa mendapatkan koordinat GPS secara langsung ketika dijalankan di browser (Flutter Web) dengan `geolocator`. Karena Tidak ada akses langsung ke sensor GPS.
 Browser hanya bisa memperkirakan lokasi lewat: IP address, Wi-Fi, atauizin lokasi dari user.
@@ -186,7 +186,7 @@ Perbedaannya hanya di cara Flutter memproses data:
 
 **Soal no 14.** Capture hasil modifikasi
 
-<img src="image/soal14.webp" style="max-width: 20vw;"/>
+<img src="image/soal14.webp" style="width: 300px; height: auto;"/>
 
 Saat GPS saya matikan, tidak muncul pesan kesalahan, melainkan indikator spinner yang terus berputar tanpa henti.
 
