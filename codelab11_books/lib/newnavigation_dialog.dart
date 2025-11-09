@@ -23,8 +23,6 @@ class _NewNavigationDialogScreenState extends State<NewNavigationDialogScreen> {
       builder: (_) => Dialog(
         backgroundColor: Colors.transparent,
         insetPadding: const EdgeInsets.all(20),
-        child: SingleChildScrollView(
-
         child: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -42,14 +40,14 @@ class _NewNavigationDialogScreenState extends State<NewNavigationDialogScreen> {
             ],
           ),
           child: Padding(
-            padding: const EdgeInsets.all(24.0),
+            padding: const EdgeInsets.all(20.0), // <- Kurangi padding
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // Header dengan icon
+                // Header dengan icon - PERKECIL
                 Container(
-                  width: 80,
-                  height: 80,
+                  width: 60, // <- Kecilkan
+                  height: 60, // <- Kecilkan
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.15),
                     shape: BoxShape.circle,
@@ -60,89 +58,78 @@ class _NewNavigationDialogScreenState extends State<NewNavigationDialogScreen> {
                   ),
                   child: const Icon(
                     Icons.palette_outlined,
-                    size: 40,
+                    size: 30, // <- Kecilkan
                     color: Colors.white,
                   ),
                 ),
 
-                const SizedBox(height: 20),
-
+                const SizedBox(height: 16), // <- Kurangi
                 // Title
                 const Text(
                   'Choose Your Theme',
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 20, // <- Kecilkan
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                     letterSpacing: 1.1,
                   ),
                 ),
 
-                const SizedBox(height: 8),
-
+                const SizedBox(height: 6), // <- Kurangi
                 // Subtitle
                 Text(
                   'Select your favorite color combination',
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: 12, // <- Kecilkan
                     color: Colors.white.withOpacity(0.8),
                     fontWeight: FontWeight.w300,
                   ),
                   textAlign: TextAlign.center,
                 ),
 
-                const SizedBox(height: 25),
-
-                // Color Options Grid
-                          ConstrainedBox(
-            constraints: BoxConstraints(
-              maxHeight: MediaQuery.of(context).size.height * 0.4, // Max 40% screen height
-            ),
-            child: SingleChildScrollView(
-              child: Wrap(
-                spacing: 16,
-                runSpacing: 16,
-                alignment: WrapAlignment.center,
-                children: [
-                  _buildColorOption(context, 'Sunset', [
-                    Colors.orange.shade700,
-                    Colors.pink.shade600,
-                    Colors.purple.shade700,
-                  ], Icons.wb_sunny_outlined),
-                  _buildColorOption(context, 'Ocean', [
-                    Colors.blue.shade700,
-                    Colors.blue.shade400,
-                    Colors.blue.shade200,
-                  ], Icons.water_drop_outlined),
-                  _buildColorOption(context, 'Forest', [
-                    Colors.green.shade800,
-                    Colors.green.shade500,
-                    Colors.lightGreen.shade300,
-                  ], Icons.park_outlined),
-                  _buildColorOption(context, 'Fire', [
-                    Colors.red.shade700,
-                    Colors.orange.shade600,
-                    Colors.yellow.shade600,
-                  ], Icons.local_fire_department_outlined),
-                  _buildColorOption(context, 'Royal', [
-                    Colors.purple.shade800,
-                    Colors.purple.shade500,
-                    Colors.blue.shade300,
-                  ], Icons.auto_awesome_outlined),
-                  _buildColorOption(context, 'Mint', [
-                    Colors.teal.shade700,
-                    Colors.cyan.shade400,
-                    Colors.lightBlue.shade200,
-                  ], Icons.icecream_outlined),
-                ],
-              ),
-            ),
-          ),
-
-
                 const SizedBox(height: 20),
 
-                // Close Button
+                // Color Options Grid - PERKECIL UKURANNYA
+                Wrap(
+                  spacing: 12, // <- Kurangi
+                  runSpacing: 12, // <- Kurangi
+                  alignment: WrapAlignment.center,
+                  children: [
+                    _buildColorOption(context, 'Sunset', [
+                      Colors.orange.shade700,
+                      Colors.pink.shade600,
+                      Colors.purple.shade700,
+                    ], Icons.wb_sunny_outlined),
+                    _buildColorOption(context, 'Ocean', [
+                      Colors.blue.shade700,
+                      Colors.blue.shade400,
+                      Colors.blue.shade200,
+                    ], Icons.water_drop_outlined),
+                    _buildColorOption(context, 'Forest', [
+                      Colors.green.shade800,
+                      Colors.green.shade500,
+                      Colors.lightGreen.shade300,
+                    ], Icons.park_outlined),
+                    _buildColorOption(context, 'Fire', [
+                      Colors.red.shade700,
+                      Colors.orange.shade600,
+                      Colors.yellow.shade600,
+                    ], Icons.local_fire_department_outlined),
+                    _buildColorOption(context, 'Royal', [
+                      Colors.purple.shade800,
+                      Colors.purple.shade500,
+                      Colors.blue.shade300,
+                    ], Icons.auto_awesome_outlined),
+                    _buildColorOption(context, 'Mint', [
+                      Colors.teal.shade700,
+                      Colors.cyan.shade400,
+                      Colors.lightBlue.shade200,
+                    ], Icons.icecream_outlined),
+                  ],
+                ),
+
+                const SizedBox(height: 16), // <- Kurangi
+                // Close Button - PERKECIL
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
@@ -152,9 +139,11 @@ class _NewNavigationDialogScreenState extends State<NewNavigationDialogScreen> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white.withOpacity(0.2),
                       foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 12,
+                      ), // <- Kecilkan
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
+                        borderRadius: BorderRadius.circular(12), // <- Kecilkan
                         side: BorderSide(
                           color: Colors.white.withOpacity(0.3),
                           width: 1,
@@ -165,7 +154,7 @@ class _NewNavigationDialogScreenState extends State<NewNavigationDialogScreen> {
                     child: const Text(
                       'Maybe Later',
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 14, // <- Kecilkan
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -174,7 +163,6 @@ class _NewNavigationDialogScreenState extends State<NewNavigationDialogScreen> {
               ],
             ),
           ),
-        ),
         ),
       ),
     );
@@ -186,6 +174,7 @@ class _NewNavigationDialogScreenState extends State<NewNavigationDialogScreen> {
     }
   }
 
+  // PERKECIL UKURAN COLOR OPTION
   Widget _buildColorOption(
     BuildContext context,
     String title,
@@ -197,24 +186,24 @@ class _NewNavigationDialogScreenState extends State<NewNavigationDialogScreen> {
         Navigator.pop(context, colors);
       },
       child: Container(
-        width: 100,
-        height: 120,
+        width: 85, // <- Kecilkan dari 100
+        height: 100, // <- Kecilkan dari 120
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(16), // <- Kecilkan
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.2),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
+              blurRadius: 8, // <- Kecilkan
+              offset: const Offset(0, 3), // <- Kecilkan
             ),
           ],
         ),
         child: Column(
           children: [
-            // Gradient Box
+            // Gradient Box - PERKECIL
             Container(
-              width: 100,
-              height: 80,
+              width: 85, // <- Kecilkan
+              height: 60, // <- Kecilkan
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
@@ -222,22 +211,22 @@ class _NewNavigationDialogScreenState extends State<NewNavigationDialogScreen> {
                   colors: colors,
                 ),
                 borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
+                  topLeft: Radius.circular(16), // <- Kecilkan
+                  topRight: Radius.circular(16), // <- Kecilkan
                 ),
               ),
-              child: Icon(icon, color: Colors.white, size: 24),
+              child: Icon(icon, color: Colors.white, size: 20), // <- Kecilkan
             ),
 
-            // Title Box
+            // Title Box - PERKECIL
             Container(
-              width: 100,
+              width: 85, // <- Kecilkan
               height: 40,
               decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.15),
                 borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(20),
-                  bottomRight: Radius.circular(20),
+                  bottomLeft: Radius.circular(16), // <- Kecilkan
+                  bottomRight: Radius.circular(16), // <- Kecilkan
                 ),
               ),
               child: Center(
@@ -245,7 +234,7 @@ class _NewNavigationDialogScreenState extends State<NewNavigationDialogScreen> {
                   title,
                   style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 12,
+                    fontSize: 11, // <- Kecilkan
                     fontWeight: FontWeight.w500,
                   ),
                 ),

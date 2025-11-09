@@ -8,6 +8,8 @@ import 'newnav_first.dart';
 import 'navigation_first.dart';
 import 'navigation_dialog.dart';
 import 'newnavigation_dialog.dart';
+import 'generator_gradient.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -28,8 +30,9 @@ class MyApp extends StatelessWidget {
       // home: const LocationScreen(),
       // home: const NavigationFirst(),
       // home: const NewNavigationFirst(),
-      home: const NavigationDialogScreen(),
+      // home: const NavigationDialogScreen(),
       // home: const NewNavigationDialogScreen(),
+      home: const GradientGeneratorScreen(),
     );
   }
 }
