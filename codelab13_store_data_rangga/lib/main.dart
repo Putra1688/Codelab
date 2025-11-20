@@ -79,6 +79,11 @@ class _MyHomePageState extends State<MyHomePage> {
           return ListTile(
             title: Text(myPizzas[index].pizzaName),
             subtitle: Text(myPizzas[index].description),
+            trailing: Text(
+              // Format harga menjadi 2 angka desimal dan tambahkan mata uang (€)
+              '€ ${myPizzas[index].price.toStringAsFixed(2)}',
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
           );
         },
       ),

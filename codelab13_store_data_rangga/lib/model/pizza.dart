@@ -5,22 +5,40 @@ class Pizza {
   final double price;
   final String imageUrl;
 
-  // The fromJson constructor takes a Map<String, dynamic> 
+  const Pizza({
+    required this.id,
+    required this.pizzaName,
+    required this.description,
+    required this.price,
+    required this.imageUrl,
+  });
+
+  // The fromJson constructor takes a Map<String, dynamic>
   // and initializes a Pizza object from it.
-  Pizza.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        pizzaName = json['pizzaName'],
-        description = json['description'],
-        price = json['price'],
-        imageUrl = json['imageUrl'];
-  
+  factory Pizza.fromJson(Map<String, dynamic> json) {
+    final id = int.tryParse(json['id'].toString()) ?? 0;
+    // final id = json['id'];
+    final pizzaName = json['pizzaName'] != null ? json['pizzaName'].toString() : 'No name';
+    final description = json['description'].toString();
+    final price = double.tryParse(json['price'].toString()) ?? 0.0;
+    final imageUrl = json['imageUrl'] ?? '';
+
+    return Pizza(
+      id: id,
+      pizzaName: pizzaName,
+      description: description,
+      price: price,
+      imageUrl: imageUrl,
+    );
+  }
+
   Map<String, dynamic> toJson() {
-  return {
-    'id': id,
-    'pizzaName': pizzaName,
-    'description': description,
-    'price': price,
-    'imageUrl': imageUrl,
-  };
-}
+    return {
+      'id': id,
+      'pizzaName': pizzaName,
+      'description': description,
+      'price': price,
+      'imageUrl': imageUrl,
+    };
+  }
 }
