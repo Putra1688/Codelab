@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import './model/pizza.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,6 +36,22 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Pizza> myPizzas = [];
   int appCounter = 0;
 
+  // praktikum 5
+  String documentsPath = '';
+  String tempPath = '';
+
+  // praktikum 6
+  late File myFile;
+  String fileText = '';
+
+  //  praktikum 7
+  final pwdController = TextEditingController();
+  String myPass = '';
+  String fileContent = '';
+
+  final storage = const FlutterSecureStorage();
+  final myKey = 'myPass';
+
   String convertToJSON(List<Pizza> pizzas) {
     return jsonEncode(pizzas.map((pizza) => jsonEncode(pizza)).toList());
   }
@@ -45,6 +64,15 @@ class _MyHomePageState extends State<MyHomePage> {
   //     pizzaString = myString;
   //   });
   // }
+
+  Future writeToSecureStorage() async {
+    await storage.write(key: myKey, value: pwdController.text);
+  }
+
+  Future<String> readFromSecureStorage() async {
+    String secret = await storage.read(key: myKey) ?? '';
+    return secret;
+  }
 
   Future readJsonFile() async {
     String myString = await DefaultAssetBundle.of(
@@ -77,15 +105,67 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  // praktikum 5
+  Future getPaths() async {
+    final docDir = await getApplicationDocumentsDirectory();
+    final tempDir = await getTemporaryDirectory();
+    setState(() {
+      documentsPath = docDir.path;
+      tempPath = tempDir.path;
+    });
+  }
+
+  // praktikum 6
+  Future<bool> writeFile() async {
+    try {
+      await myFile.writeAsString('Rangga, 2341720248, TI3G');
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  // Method untuk menulis ke file dengan input dari TextField
+  Future<bool> writeFileWithInput() async {
+    try {
+      await myFile.writeAsString(
+        pwdController.text,
+      ); // Gunakan input dari TextField
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> readFile() async {
+    try {
+      // Read the file.
+      String fileContent = await myFile.readAsString();
+      setState(() {
+        fileText = fileContent;
+      });
+      return true;
+    } catch (e) {
+      // On error, return false.
+      return false;
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    readAndWritePreference();
-    readJsonFile().then((value) {
-      setState(() {
-        appCounter = appCounter;
-      });
+    getPaths().then((_) {
+      myFile = File('$documentsPath/pizzas.txt');
+      // writeFile();
     });
+    // super.initState();
+
+    // readAndWritePreference();
+    // readJsonFile().then((value) {
+    //   setState(() {
+    //     appCounter = appCounter;
+    //   });
+    // });
   }
 
   // @override
@@ -108,27 +188,94 @@ class _MyHomePageState extends State<MyHomePage> {
   //     ),
   //   );
   // }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //     appBar: AppBar(title: const Text('JSON-RANGGA')),
+  //     body: Center(
+  //       child: Column(
+  //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //         children: [
+  //           Text(
+  //             'You have opened the app $appCounter times.',
+  //             style: const TextStyle(fontSize: 20),
+  //           ),
+  //           ElevatedButton(
+  //             onPressed: () {
+  //               deletePreference();
+  //             },
+  //             child: const Text('Rangga Reset counter'),
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('JSON-RANGGA')),
+      appBar: AppBar(title: const Text('Path Provider Rangga')),
       body: Center(
+        // Pakai Center biar rapi di tengah
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.center, // Ke tengah vertikal
           children: [
-            Text(
-              'You have opened the app $appCounter times.',
-              style: const TextStyle(fontSize: 20),
+            // 1. Tempat Input
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: TextField(
+                controller: pwdController,
+                decoration: const InputDecoration(
+                  labelText: 'Ketik sesuatu di sini',
+                ),
+              ),
             ),
+
+            // 2. Tombol Simpan
             ElevatedButton(
+              child: const Text('Save Value'),
               onPressed: () {
-                deletePreference();
+                writeToSecureStorage();
               },
-              child: const Text('Rangga Reset counter'),
+            ),
+
+            const SizedBox(height: 10), // Jarak dikit
+            // 3. Tombol Baca
+            ElevatedButton(
+              child: const Text('Read Value'),
+              onPressed: () {
+                readFromSecureStorage().then((value) {
+                  setState(() {
+                    myPass = value; // Data masuk ke variabel
+                  });
+                });
+              },
+            ),
+
+            const SizedBox(height: 30), // Jarak agak jauh
+            // 4. DI SINI HASILNYA AKAN MUNCUL
+            const Text("Hasil Data Tersimpan:"), // Label
+            Text(
+              myPass, // <--- INI VARIABEL YANG AKAN TAMPIL
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.blue,
+              ),
             ),
           ],
         ),
       ),
     );
   }
+
+  // Text('Doc path: $documentsPath'),
+  // Text('Temp path $tempPath'),
+  // ElevatedButton(
+  //   child: const Text('Read File'),
+  //   onPressed: () => readFile(),
+  // ),
+  // Text(fileText),
 }
