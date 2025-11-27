@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'model/pizza.dart';
 import 'httphelper.dart';
+import 'pizza_detail.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,10 +28,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  // Deklarasi HttpHelper sebagai anggota kelas
+  final HttpHelper helper = HttpHelper();
+
+  // Memperbaiki fungsi agar hanya memanggil httpHelper.getPizzaList()
   Future<List<Pizza>> callPizzas() async {
-    HttpHelper helper = HttpHelper();
-    List<Pizza> pizzas = await helper.getPizzaList();
-    return pizzas;
+    return await helper.getPizzaList();
+  }
+
+  // Fungsi untuk refresh data setelah kembali dari PizzaDetailScreen
+  void refreshPizzaList() {
+    setState(() {
+      // Panggil setState untuk memicu FutureBuilder memuat ulang data
+    });
   }
 
   @override
@@ -39,48 +49,87 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: const Text(
           'RANGGA - JSON',
-          style: TextStyle(color: Colors.white), 
+          style: TextStyle(color: Colors.white),
         ),
-        // --- Bagian Kunci untuk Gradient ---
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              // Tentukan arah gradient (kiri atas ke kanan bawah)
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-          
-              colors: <Color>[
-                Colors.blue,
-                Colors.yellow,
-              ],
+              colors: <Color>[Colors.blue, Colors.yellow],
             ),
           ),
         ),
-  
       ),
-      body: FutureBuilder(
-          future: callPizzas(),
-          builder: (BuildContext context, AsyncSnapshot<List<Pizza>> 
-snapshot) {
+      body: FutureBuilder<List<Pizza>>(
+        // Tentukan tipe secara eksplisit
+        future: callPizzas(),
+        builder: (BuildContext context, AsyncSnapshot<List<Pizza>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            // Tampilkan CircularProgressIndicator saat menunggu data
+            return const Center(child: CircularProgressIndicator());
+          }
           if (snapshot.hasError) {
-            return const Text('Something went wrong');
+            // Tampilkan pesan error jika terjadi kesalahan
+            return Center(
+              child: Text('Something went wrong: ${snapshot.error}'),
+            );
           }
-          if (!snapshot.hasData) {
-            return const CircularProgressIndicator();
+          if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            // Tampilkan pesan jika data kosong
+            return const Center(child: Text('No pizzas found.'));
           }
-            return ListView.builder(
-                itemCount: (snapshot.data == null) ? 0 : snapshot.
-data!.length,
-                itemBuilder: (BuildContext context, int position) {
-                  return ListTile(
-                    title: Text(snapshot.data![position].pizzaName),
-                    subtitle: Text(snapshot.data![position].
-description +
-                        ' - € ' +
-                        snapshot.data![position].price.toString()),
+
+          // Data berhasil dimuat
+          List<Pizza> pizzas = snapshot.data!;
+          return ListView.builder(
+            itemCount: pizzas.length,
+            itemBuilder: (BuildContext context, int position) {
+              final pizza = pizzas[position];
+              return ListTile(
+                title: Text(pizza.pizzaName),
+                subtitle: Text(
+                  '${pizza.description} - € ${pizza.price.toString()}',
+                ),
+                onTap: () async {
+                  // Navigasi ke detail untuk EDIT (PUT)
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PizzaDetailScreen(
+                        pizza: pizza,
+                        isNew: false, // Ini untuk EDIT (PUT)
+                      ),
+                    ),
                   );
-                });
-          }),
-    );  
-}
+                  // Refresh data saat kembali
+                  refreshPizzaList();
+                },
+              );
+            },
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () async {
+          // Navigasi ke detail untuk ADD NEW (POST)
+          await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PizzaDetailScreen(
+                // --- PERBAIKAN DI SINI ---
+                // Berikan nilai default untuk 'id' dan parameter 'required' lainnya.
+                pizza: Pizza(id: 0),
+                // -------------------------
+                isNew: true, // Ini untuk ADD NEW (POST)
+              ),
+            ),
+          );
+          // Refresh data saat kembali
+          refreshPizzaList();
+        },
+      ),
+    );
+  }
 }

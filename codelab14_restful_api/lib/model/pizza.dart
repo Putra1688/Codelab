@@ -12,12 +12,12 @@ class Pizza {
   final double price;
   final String imageUrl;
 
-  const Pizza({
-    required this.id,
-    required this.pizzaName,
-    required this.description,
-    required this.price,
-    required this.imageUrl,
+  Pizza({
+    this.id = 0, // <--- UBAH DI SINI
+    this.pizzaName = '',
+    this.description = '',
+    this.price = 0.0,
+    this.imageUrl = '',
   });
 
   // The fromJson constructor takes a Map<String, dynamic>
