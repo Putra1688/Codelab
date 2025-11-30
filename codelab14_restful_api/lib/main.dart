@@ -31,15 +31,26 @@ class _MyHomePageState extends State<MyHomePage> {
   // Deklarasi HttpHelper sebagai anggota kelas
   final HttpHelper helper = HttpHelper();
 
+  // Future yang akan menahan hasil pemanggilan API
+  Future<List<Pizza>>? _pizzasListFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    // Inisialisasi future saat pertama kali widget dibuat
+    _pizzasListFuture = callPizzas();
+  }
+
   // Memperbaiki fungsi agar hanya memanggil httpHelper.getPizzaList()
   Future<List<Pizza>> callPizzas() async {
     return await helper.getPizzaList();
   }
 
-  // Fungsi untuk refresh data setelah kembali dari PizzaDetailScreen
+  // Fungsi untuk refresh data setelah kembali dari PizzaDetailScreen atau setelah DELETE
   void refreshPizzaList() {
     setState(() {
-      // Panggil setState untuk memicu FutureBuilder memuat ulang data
+      // Perbarui Future untuk memicu FutureBuilder memuat ulang data
+      _pizzasListFuture = callPizzas();
     });
   }
 
@@ -62,21 +73,18 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       body: FutureBuilder<List<Pizza>>(
-        // Tentukan tipe secara eksplisit
-        future: callPizzas(),
+        // Gunakan Future yang sudah diinisialisasi di initState
+        future: _pizzasListFuture,
         builder: (BuildContext context, AsyncSnapshot<List<Pizza>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            // Tampilkan CircularProgressIndicator saat menunggu data
             return const Center(child: CircularProgressIndicator());
           }
           if (snapshot.hasError) {
-            // Tampilkan pesan error jika terjadi kesalahan
             return Center(
               child: Text('Something went wrong: ${snapshot.error}'),
             );
           }
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            // Tampilkan pesan jika data kosong
             return const Center(child: Text('No pizzas found.'));
           }
 
@@ -86,25 +94,39 @@ class _MyHomePageState extends State<MyHomePage> {
             itemCount: pizzas.length,
             itemBuilder: (BuildContext context, int position) {
               final pizza = pizzas[position];
-              return ListTile(
-                title: Text(pizza.pizzaName),
-                subtitle: Text(
-                  '${pizza.description} - € ${pizza.price.toString()}',
+              return Dismissible(
+                key: Key(pizza.id?.toString() ?? position.toString()),
+                direction: DismissDirection.endToStart,
+                background: Container(
+                  color: Colors.red,
+                  alignment: Alignment.centerRight,
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: const Icon(Icons.delete, color: Colors.white),
                 ),
-                onTap: () async {
-                  // Navigasi ke detail untuk EDIT (PUT)
-                  await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PizzaDetailScreen(
-                        pizza: pizza,
-                        isNew: false, // Ini untuk EDIT (PUT)
-                      ),
-                    ),
-                  );
-                  // Refresh data saat kembali
+                onDismissed: (direction) async {
+                  final helper = HttpHelper();
+                  if (pizza.id != null) {
+                    await helper.deletePizza(pizza.id!);
+                  }
+                  // reload from server
                   refreshPizzaList();
                 },
+                child: ListTile(
+                  title: Text(pizza.pizzaName ?? 'No Name'),
+                  subtitle: Text(
+                    '${pizza.description ?? 'No description'} - € ${pizza.price?.toStringAsFixed(2) ?? '0.00'}',
+                  ),
+                  onTap: () async {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            PizzaDetailScreen(pizza: pizza, isNew: false),
+                      ),
+                    );
+                    refreshPizzaList();
+                  },
+                ),
               );
             },
           );
@@ -118,11 +140,9 @@ class _MyHomePageState extends State<MyHomePage> {
             context,
             MaterialPageRoute(
               builder: (context) => PizzaDetailScreen(
-                // --- PERBAIKAN DI SINI ---
-                // Berikan nilai default untuk 'id' dan parameter 'required' lainnya.
-                pizza: Pizza(id: 0),
-                // -------------------------
-                isNew: true, // Ini untuk ADD NEW (POST)
+                // Berikan nilai default yang lengkap untuk Pizza baru
+                pizza: Pizza(id: 0, pizzaName: '', description: '', price: 0.0),
+                isNew: true, // Untuk ADD NEW (POST)
               ),
             ),
           );

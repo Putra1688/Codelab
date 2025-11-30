@@ -11,9 +11,9 @@ Hasil Capture :
 
 | GET                 | POST         
 | ----------------- | -------------- 
-| <img src="images/p1.png" alt="Hasil Praktikum" width="250"/> |<img src="images/post.webp" style="max-width: 33vw;"/> |
+| <img src="images/p1.png" alt="Hasil Praktikum" width="250"/> |<img src="images/post.webp" style="max-width: 28vw;"/> |
 
 
 |PUT              |DELETE       |
 |-------------- |-------------- |
-<img src="images/put.webp" style="max-width: 25vw;"/> |<img src="images/1.webp" style="max-width: 20vw;"/> |
+<img src="images/put.webp" style="max-width: 25vw;"/> |<img src="images/delete.webp" style="max-width: 25vw;"/> |

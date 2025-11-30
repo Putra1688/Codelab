@@ -1,11 +1,12 @@
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'model/pizza.dart'; // Pastikan path ini benar
+import 'model/pizza.dart';
 
 class HttpHelper {
   final String authority = '9y6jr.wiremockapi.cloud';
-  final String path = 'pizzalist'; // Path untuk GET semua pizza
+  final String path = 'pizzalist';
+  final String pizzaPath = 'pizza'; // Path dasar untuk operasi tunggal
 
   // Implementasi Singleton Pattern (sudah benar)
   static final HttpHelper _httpHelper = HttpHelper._internal();
@@ -21,23 +22,26 @@ class HttpHelper {
 
     if (result.statusCode == HttpStatus.ok) {
       final jsonResponse = json.decode(result.body);
-      
-      // Menggunakan List.from() untuk memastikan tipe data yang benar sebelum map
+
       List<Pizza> pizzas = List<Pizza>.from(
-          jsonResponse.map((i) => Pizza.fromJson(i)));
-      
+        jsonResponse.map((i) => Pizza.fromJson(i)),
+      );
+
       return pizzas;
     } else {
-      // Mengembalikan list kosong jika gagal
-      return [];
+      // Lebih baik melempar Exception daripada mengembalikan list kosong
+      // jika ini adalah API utama untuk data.
+      throw Exception(
+        'Failed to load pizza list. Status: ${result.statusCode}',
+      );
     }
   }
 
   // --- Fungsi POST (Menambah Pizza Baru) ---
   Future<String> postPizza(Pizza pizza) async {
-    const postPath = '/pizza'; // Path untuk POST
     String post = json.encode(pizza.toJson());
-    Uri url = Uri.https(authority, postPath);
+    // POST biasanya ke path koleksi, e.g., /pizza
+    Uri url = Uri.https(authority, pizzaPath);
 
     http.Response r = await http.post(
       url,
@@ -46,34 +50,50 @@ class HttpHelper {
       },
       body: post,
     );
-    // Mengembalikan status body atau pesan sukses/gagal
-    return r.body.isNotEmpty ? r.body : 'Status: ${r.statusCode} (POST)';
+
+    // Penanganan status POST yang lebih baik (biasanya 201 Created)
+    if (r.statusCode == HttpStatus.created || r.statusCode == HttpStatus.ok) {
+      return r.body.isNotEmpty
+          ? r.body
+          : 'Status: ${r.statusCode} (POST Success)';
+    } else {
+      throw Exception('POST failed: ${r.statusCode} ${r.body}');
+    }
   }
 
   // --- Fungsi PUT (Mengubah Pizza yang Sudah Ada) ---
   Future<String> putPizza(Pizza pizza) async {
-    const putPath = '/pizza'; // Path untuk PUT
     String put = json.encode(pizza.toJson());
-    Uri url = Uri.https(authority, putPath);
-    
+    // PERBAIKAN: Menggunakan ID sebagai segmen path: /pizza/{id}
+    if (pizza.id == null) {
+      throw Exception('Cannot PUT: Pizza ID is required.');
+    }
+    Uri url = Uri.https(authority, '$pizzaPath/${pizza.id}');
+
     http.Response r = await http.put(
       url,
       headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-Type',
+        'Content-Type': 'application/json; charset=UTF-8',
       },
       body: put,
     );
-    // Mengembalikan status body atau pesan sukses/gagal
-    return r.body.isNotEmpty ? r.body : 'Status: ${r.statusCode} (PUT)';
+
+    // Tambahkan penanganan status (200 OK atau 204 No Content)
+    if (r.statusCode == HttpStatus.ok || r.statusCode == HttpStatus.noContent) {
+      return r.body.isNotEmpty
+          ? r.body
+          : 'Status: ${r.statusCode} (PUT Success)';
+    } else {
+      // Melempar Exception untuk ditangkap di PizzaDetailScreen
+      throw Exception('PUT failed: ${r.statusCode} ${r.body}');
+    }
   }
-  
+
   // --- Fungsi DELETE (Menghapus Pizza) ---
   Future<String> deletePizza(int id) async {
     const deletePath = '/pizza';
     Uri url = Uri.https(authority, deletePath);
-    http.Response r = await http.delete(
-      url,
-    );
+    http.Response r = await http.delete(url);
     return r.body;
   }
 }
